@@ -1,108 +1,134 @@
-<html>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Peatlands’ Resonance: Figuring nature and culture in Dutch Hoogvenen</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head><body>
-    <style type="text/css">
-  body {;
-      background-color: #ac978e;
-      margin:10px auto;
-      font-family: "consolas", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      max-width:800px;
-      line-height:1.4;
-      font-size:14px;
-      text-align: justify;
-      color:#000000;
-      
-      padding:0 
-  }
-  mark {
-    background-color: whitesmoke;
-    color: black;
+<title></title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<style>
+
+body {
+
+	background-image: url('grunge_patterns.jpg');
+	background-attachment: fixed;
+	color: #333;
 }
 
-  h1,h2,h3{
-      line-height:1.2
-  }
-
-  a:link, a:visited {
-      color: #000000;
-      text-decoration: none;
-  }
-
-  a:hover, a:active {
-      color: #f8f5d2;
-      text-decoration: none;
-  }
-         .container {
-    position: relative;
-    text-align: justify;
-    color: black;
+.box {
+	border-radius: 3px;
+	background: rgba(101, 101, 101, 0.7); margin: auto; padding: 12px;
 }
 
-/* Bottom left text */
-.bottom-left {
-    text-align: 
-    position: absolute;
-    bottom: 8px;
-    left: 16px;
+.lightbox {
+	zoom: 1.5;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(10, 10, 10, 0.8);
+	text-align: center;
+	margin: auto;
+
 }
 
-/* Top left text */
-.top-left {
-    position: absolute;
-    top: 8px;
-    left: 16px;
+div.horizontal {
+	display: flex;
+	justify-content: center;
+	height: 100%;
 }
 
-/* Top right text */
-.top-right {
-    position: absolute;
-    top: 8px;
-    right: 16px;
+div.vertical {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
 }
 
-/* Bottom right text */
-.bottom-right {
-    position: absolute;
-    bottom: 8px;
-    right: 16px;
-}
-  h1 {text-align: center;
+::-webkit-input-placeholder {
+   color: #955;
+   text-align: center;
 }
 
-/* Centered text */
-.centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-    </style>
-    <style>
-.button {
-  border: none;
-  font-family: "consolas", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: black;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 15px;
-  margin: 4px 2px;
-  cursor: pointer;
+::-moz-placeholder {
+   color: #955;
+   text-align: center;
 }
 
-.button1 {background-color: #dbdac6;} /* Green */
-.button2 {background-color: #008CBA;} /* Blue */
-</style><font size="20x">
-        <br>
-        Peatlands’ Resonance: Figuring nature and culture in Dutch Hoogvenen</font><br><br><br><h1><img src="homepage.gif"></h1>
-        	<br>pantea and Kate Foster in collaboration with dr Roy van Beek and dr Juul Limpens
-    
-    <br><br> <a href="index.html"><button class="button button1">Overview</button></a><br><a href="backstory.html"><button class="button button1">Backstory: Who We Are</button></a><br><a href="index.html"><button class="button button1">New Story</button></a><br><a href="index.html"><button class="button button1">Other Stories</button></a><br><a href="index.html"><button class="button button1">Collaboration</button></a><br><a href="index.html"><button class="button button1">Taking Time</button></a><br><a href="index.html"><button class="button button1">Going Places</button></a></h1><br><br><br>Peatlands’ Resonance - 2021<br>
-    </body>
-    </html> 
-    
- 
-    
+:-ms-input-placeholder {
+   color: #955;
+   text-align: center;
+}
+
+</style>
+
+<body>
+
+	<div id="loginbox" class="lightbox" >
+		<div class="horizontal">
+			<div class="vertical">
+				<div class="box">
+					<input style="margin: 16px; text-align: center;" id="password" type="password" placeholder="password" /> <br />
+					<button id="loginbutton" type="button">Enter</button>
+					<p id="wrongPassword" style="display: none">wrong password</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+
+	 <script type="text/javascript" src="https://rawcdn.githack.com/chrisveness/crypto/7067ee62f18c76dd4a9d372a00e647205460b62b/sha1.js"></script>
+
+	<script type="text/javascript">
+	"use strict";
+
+
+	function loadPage(pwd) {
+
+		var hash= pwd;
+		hash= Sha1.hash(pwd);
+		var url= hash + "/index.html";
+
+		$.ajax({
+			url : url,
+			dataType : "html",
+			success : function(data) {
+
+				window.location= url;
+
+			},
+			error : function(xhr, ajaxOptions, thrownError) {
+
+
+				parent.location.hash= hash;
+
+				//$("#wrongPassword").show();
+				$("#password").attr("placeholder","wrong password");
+				$("#password").val("");
+			}
+		});
+	}
+
+
+	$("#loginbutton").on("click", function() {
+		loadPage($("#password").val());
+	});
+	$("#password").keypress(function(e) {
+		if (e.which == 13) {
+
+			loadPage($("#password").val());
+		}
+	});
+	$("#password").focus();
+
+	</script>
+
+</body>
+</html>
